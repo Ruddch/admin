@@ -1,0 +1,85 @@
+.tournaments-table {
+  overflow-x: auto;
+}
+
+.tournaments-table__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tournaments-table__table thead {
+  background-color: #f8f9fa;
+}
+
+.tournaments-table__table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tournaments-table__table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tournaments-table__table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.tournaments-table__empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.tournaments-table__status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tournaments-table__status--registration {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.tournaments-table__status--active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.tournaments-table__status--finished {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.tournaments-table__status--inactive {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.tournaments-table__button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.tournaments-table__button--edit {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.tournaments-table__button--edit:hover {
+  background-color: #2980b9;
+}
+

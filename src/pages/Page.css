@@ -1,0 +1,19 @@
+.page {
+  width: 100%;
+}
+
+.page__title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+.page__content {
+  min-height: 400px;
+  padding: 24px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px dashed #ddd;
+}
+

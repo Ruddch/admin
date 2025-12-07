@@ -1,0 +1,24 @@
+.users-page__form-container {
+  margin-bottom: 24px;
+}
+
+.users-page__stats {
+  padding: 8px 16px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.users-page__stats-text {
+  font-size: 14px;
+  color: #666;
+}
+
+.page__button--secondary {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.page__button--secondary:hover {
+  background-color: #2980b9;
+}
+

@@ -1,0 +1,101 @@
+.tokens-table {
+  overflow-x: auto;
+}
+
+.tokens-table__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tokens-table__table thead {
+  background-color: #f8f9fa;
+}
+
+.tokens-table__table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tokens-table__table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tokens-table__table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.tokens-table__empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.tokens-table__image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.tokens-table__no-image {
+  color: #999;
+  font-style: italic;
+}
+
+.tokens-table__status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tokens-table__status--active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.tokens-table__status--inactive {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.tokens-table__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tokens-table__button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.tokens-table__button--edit {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.tokens-table__button--edit:hover {
+  background-color: #2980b9;
+}
+
+.tokens-table__button--delete {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.tokens-table__button--delete:hover {
+  background-color: #c0392b;
+}
+
