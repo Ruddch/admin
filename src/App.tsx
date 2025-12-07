@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { AuthProvider } from './auth/AuthContext'
 import { AppRouter } from './router/AppRouter'
 
@@ -8,11 +8,11 @@ const BASE_PATH = import.meta.env.BASE_URL || '/'
 
 function App() {
   return (
-    <BrowserRouter basename={BASE_PATH}>
+    <HashRouter basename={BASE_PATH}>
       <AuthProvider>
         <AppRouter />
       </AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
