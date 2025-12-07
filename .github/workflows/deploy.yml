@@ -36,7 +36,9 @@ jobs:
         env:
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL || 'https://back.hodleague.com' }}
           # Если репозиторий не в корне GitHub Pages, раскомментируйте и укажите путь:
+          # Например, если репозиторий называется "admin" и доступен по адресу username.github.io/admin
           # VITE_BASE_PATH: '/admin/'
+          # Если репозиторий в корне (username.github.io), оставьте закомментированным или удалите эту строку
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

@@ -62,16 +62,14 @@ npm run build
 Если ваш репозиторий **не в корне** GitHub Pages (например, `username.github.io/admin`):
 
 1. Откройте `.github/workflows/deploy.yml`
-2. Раскомментируйте и укажите правильный путь в переменной `VITE_BASE_PATH`:
+2. Найдите секцию `env` в шаге "Build"
+3. Раскомментируйте строку с `VITE_BASE_PATH` и укажите правильный путь:
    ```yaml
    VITE_BASE_PATH: '/admin/'
    ```
-3. Также обновите `vite.config.ts`, указав тот же путь:
-   ```typescript
-   const base = '/admin/' // или import.meta.env.VITE_BASE_PATH || '/'
-   ```
+   Где `admin` - это название вашего репозитория
 
-Если репозиторий **в корне** GitHub Pages (например, `username.github.io`), оставьте base path как `/`.
+Если репозиторий **в корне** GitHub Pages (например, `username.github.io`), оставьте `VITE_BASE_PATH` закомментированным - будет использоваться значение по умолчанию `/`.
 
 ### Переменные окружения (опционально):
 
