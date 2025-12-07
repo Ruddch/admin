@@ -46,16 +46,16 @@ export const TournamentsPage = () => {
     }
   }
 
-  const handleCreate = async (data: CreateTournamentDto) => {
-    await tournamentsApi.create(data)
+  const handleCreate = async (data: CreateTournamentDto | UpdateTournamentDto) => {
+    await tournamentsApi.create(data as CreateTournamentDto)
     await loadTournaments()
     await loadStatsSummary()
     setShowForm(false)
   }
 
-  const handleUpdate = async (data: UpdateTournamentDto) => {
+  const handleUpdate = async (data: CreateTournamentDto | UpdateTournamentDto) => {
     if (!editingTournament) return
-    await tournamentsApi.update(editingTournament.id, data)
+    await tournamentsApi.update(editingTournament.id, data as UpdateTournamentDto)
     await loadTournaments()
     await loadStatsSummary()
     setEditingTournament(null)

@@ -43,15 +43,15 @@ export const TokensPage = () => {
     }
   }
 
-  const handleCreate = async (data: CreateTokenDto) => {
-    await tokensApi.create(data)
+  const handleCreate = async (data: CreateTokenDto | UpdateTokenDto) => {
+    await tokensApi.create(data as CreateTokenDto)
     await loadTokens()
     setShowForm(false)
   }
 
-  const handleUpdate = async (data: UpdateTokenDto) => {
+  const handleUpdate = async (data: CreateTokenDto | UpdateTokenDto) => {
     if (!editingToken) return
-    await tokensApi.update(editingToken.id, data)
+    await tokensApi.update(editingToken.id, data as UpdateTokenDto)
     await loadTokens()
     setEditingToken(null)
     setShowForm(false)

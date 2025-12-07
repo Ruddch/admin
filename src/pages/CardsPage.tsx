@@ -51,15 +51,15 @@ export const CardsPage = () => {
     }
   }
 
-  const handleCreate = async (data: CreateCardDto) => {
-    await cardsApi.create(data)
+  const handleCreate = async (data: CreateCardDto | UpdateCardDto) => {
+    await cardsApi.create(data as CreateCardDto)
     await loadCards()
     setShowForm(false)
   }
 
-  const handleUpdate = async (data: UpdateCardDto) => {
+  const handleUpdate = async (data: CreateCardDto | UpdateCardDto) => {
     if (!editingCard) return
-    await cardsApi.update(editingCard.id, data)
+    await cardsApi.update(editingCard.id, data as UpdateCardDto)
     await loadCards()
     setEditingCard(null)
     setShowForm(false)
