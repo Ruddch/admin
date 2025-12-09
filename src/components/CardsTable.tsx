@@ -46,7 +46,16 @@ export const CardsTable = ({ cards, onEdit, onDelete, onActivate }: CardsTablePr
                     <span className="cards-table__token-symbol">({card.token_symbol})</span>
                   </div>
                 </td>
-                <td>{card.rarity}</td>
+                <td>
+                  <span
+                    style={{
+                      color: card.rarity_color || '#333',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {card.rarity_name || card.rarity}
+                  </span>
+                </td>
                 <td>{card.design_type}</td>
                 <td>
                   {card.background_image_url ? (

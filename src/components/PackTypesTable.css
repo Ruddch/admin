@@ -1,8 +1,8 @@
-.tokens-table {
+.pack-types-table {
   overflow-x: auto;
 }
 
-.tokens-table__table {
+.pack-types-table__table {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
@@ -10,11 +10,11 @@
   overflow: hidden;
 }
 
-.tokens-table__table thead {
+.pack-types-table__table thead {
   background-color: #f8f9fa;
 }
 
-.tokens-table__table th {
+.pack-types-table__table th {
   padding: 12px;
   text-align: left;
   font-weight: 600;
@@ -22,34 +22,35 @@
   border-bottom: 2px solid #e0e0e0;
 }
 
-.tokens-table__table td {
+.pack-types-table__table td {
   padding: 12px;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.tokens-table__table tbody tr:hover {
+.pack-types-table__table tbody tr:hover {
   background-color: #f8f9fa;
 }
 
-.tokens-table__empty {
+.pack-types-table__empty {
   text-align: center;
   padding: 40px;
   color: #999;
 }
 
-.tokens-table__image {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 4px;
+.pack-types-table__description {
+  max-width: 200px;
+  word-break: break-word;
 }
 
-.tokens-table__no-image {
-  color: #999;
-  font-style: italic;
+.pack-types-table__price {
+  max-width: 150px;
+  word-break: break-all;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  cursor: help;
 }
 
-.tokens-table__status {
+.pack-types-table__status {
   display: inline-block;
   padding: 4px 8px;
   border-radius: 4px;
@@ -57,22 +58,22 @@
   font-weight: 500;
 }
 
-.tokens-table__status--active {
+.pack-types-table__status--active {
   background-color: #d4edda;
   color: #155724;
 }
 
-.tokens-table__status--inactive {
+.pack-types-table__status--inactive {
   background-color: #f8d7da;
   color: #721c24;
 }
 
-.tokens-table__actions {
+.pack-types-table__actions {
   display: flex;
   gap: 8px;
 }
 
-.tokens-table__button {
+.pack-types-table__button {
   padding: 6px 12px;
   border: none;
   border-radius: 4px;
@@ -81,30 +82,20 @@
   transition: all 0.3s ease;
 }
 
-.tokens-table__button--edit {
+.pack-types-table__button--edit {
   background-color: #3498db;
   color: #fff;
 }
 
-.tokens-table__button--edit:hover {
+.pack-types-table__button--edit:hover {
   background-color: #2980b9;
 }
 
-.tokens-table__button--prices {
-  background-color: #9b59b6;
-  color: #fff;
-}
-
-.tokens-table__button--prices:hover {
-  background-color: #8e44ad;
-}
-
-.tokens-table__button--delete {
+.pack-types-table__button--delete {
   background-color: #e74c3c;
   color: #fff;
 }
 
-.tokens-table__button--delete:hover {
+.pack-types-table__button--delete:hover {
   background-color: #c0392b;
 }
-

@@ -25,12 +25,36 @@ export const Sidebar = () => {
           Cards
         </NavLink>
         <NavLink
+          to="/rarities"
+          className={({ isActive }) =>
+            `sidebar__link ${isActive ? 'sidebar__link--active' : ''}`
+          }
+        >
+          Rarities
+        </NavLink>
+        <NavLink
           to="/tournaments"
           className={({ isActive }) =>
             `sidebar__link ${isActive ? 'sidebar__link--active' : ''}`
           }
         >
           Tournaments
+        </NavLink>
+        <NavLink
+          to="/prizes"
+          className={({ isActive }) =>
+            `sidebar__link ${isActive ? 'sidebar__link--active' : ''}`
+          }
+        >
+          Prizes
+        </NavLink>
+        <NavLink
+          to="/pack-types"
+          className={({ isActive }) =>
+            `sidebar__link ${isActive ? 'sidebar__link--active' : ''}`
+          }
+        >
+          Pack Types
         </NavLink>
         <NavLink
           to="/users"

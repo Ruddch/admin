@@ -1,38 +1,48 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { cardsApi, CardsFilters } from '../api/cardsApi'
-import { Card, CreateCardDto, UpdateCardDto } from '../api/types'
+import { Card } from '../api/types'
 import { tokensApi } from '../api/tokensApi'
 import { Token } from '../api/types'
 import { CardsTable } from '../components/CardsTable'
-import { CardForm } from '../components/CardForm'
 import './Page.css'
 import './CardsPage.css'
 
+const DEFAULT_LIMIT = 20
+
 export const CardsPage = () => {
+  const navigate = useNavigate()
   const [cards, setCards] = useState<Card[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [editingCard, setEditingCard] = useState<Card | null>(null)
-  const [showForm, setShowForm] = useState(false)
   const [tokens, setTokens] = useState<Token[]>([])
   const [filters, setFilters] = useState<CardsFilters>({
     active_only: false,
     token_id: null,
     rarity: null,
   })
+  const [skip, setSkip] = useState<number>(0)
+  const [limit] = useState<number>(DEFAULT_LIMIT)
+  const [total, setTotal] = useState<number>(0)
+  const [hasNext, setHasNext] = useState<boolean>(false)
+  const [hasPrev, setHasPrev] = useState<boolean>(false)
 
   useEffect(() => {
     loadTokens()
   }, [])
 
   useEffect(() => {
-    loadCards()
+    setSkip(0) // Сбрасываем на первую страницу при изменении фильтра
   }, [filters])
+
+  useEffect(() => {
+    loadCards()
+  }, [filters, skip])
 
   const loadTokens = async () => {
     try {
       const data = await tokensApi.getAll()
-      setTokens(data)
+      setTokens(data.items)
     } catch (err) {
       console.error('Ошибка при загрузке токенов:', err)
     }
@@ -42,8 +52,11 @@ export const CardsPage = () => {
     try {
       setLoading(true)
       setError('')
-      const data = await cardsApi.getAll(filters)
-      setCards(data)
+      const data = await cardsApi.getAll(filters, skip, limit)
+      setCards(data.items)
+      setTotal(data.total)
+      setHasNext(data.has_next)
+      setHasPrev(data.has_prev)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Ошибка при загрузке карточек')
     } finally {
@@ -51,18 +64,16 @@ export const CardsPage = () => {
     }
   }
 
-  const handleCreate = async (data: CreateCardDto | UpdateCardDto) => {
-    await cardsApi.create(data as CreateCardDto)
-    await loadCards()
-    setShowForm(false)
+  const handleNextPage = () => {
+    if (hasNext) {
+      setSkip((prev) => prev + limit)
+    }
   }
 
-  const handleUpdate = async (data: CreateCardDto | UpdateCardDto) => {
-    if (!editingCard) return
-    await cardsApi.update(editingCard.id, data as UpdateCardDto)
-    await loadCards()
-    setEditingCard(null)
-    setShowForm(false)
+  const handlePrevPage = () => {
+    if (hasPrev) {
+      setSkip((prev) => Math.max(0, prev - limit))
+    }
   }
 
   const handleDelete = async (id: number) => {
@@ -92,13 +103,11 @@ export const CardsPage = () => {
   }
 
   const handleEdit = (card: Card) => {
-    setEditingCard(card)
-    setShowForm(true)
+    navigate(`/cards/${card.id}`)
   }
 
-  const handleCancel = () => {
-    setShowForm(false)
-    setEditingCard(null)
+  const handleCreate = () => {
+    navigate('/cards/new')
   }
 
   const handleFilterChange = (key: keyof CardsFilters, value: boolean | number | string | null) => {
@@ -168,10 +177,7 @@ export const CardsPage = () => {
           </div>
           <button
             className="page__button page__button--primary"
-            onClick={() => {
-              setEditingCard(null)
-              setShowForm(true)
-            }}
+            onClick={handleCreate}
           >
             Создать карточку
           </button>
@@ -180,26 +186,41 @@ export const CardsPage = () => {
 
       {error && <div className="page__error">{error}</div>}
 
-      {showForm && (
-        <div className="cards-page__form-container">
-          <CardForm
-            card={editingCard}
-            onSubmit={editingCard ? handleUpdate : handleCreate}
-            onCancel={handleCancel}
-          />
-        </div>
-      )}
-
       <div className="page__content">
         {loading ? (
           <div className="page__loading">Загрузка...</div>
         ) : (
-          <CardsTable
-            cards={cards}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            onActivate={handleActivate}
-          />
+          <>
+            <CardsTable
+              cards={cards}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onActivate={handleActivate}
+            />
+            {total > 0 && (
+              <div className="cards-page__pagination">
+                <div className="cards-page__pagination-info">
+                  Показано {skip + 1}-{Math.min(skip + limit, total)} из {total}
+                </div>
+                <div className="cards-page__pagination-controls">
+                  <button
+                    className="page__button"
+                    onClick={handlePrevPage}
+                    disabled={!hasPrev || loading}
+                  >
+                    Предыдущая
+                  </button>
+                  <button
+                    className="page__button"
+                    onClick={handleNextPage}
+                    disabled={!hasNext || loading}
+                  >
+                    Следующая
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

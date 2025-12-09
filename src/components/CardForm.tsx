@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Card, CreateCardDto, UpdateCardDto } from '../api/types'
+import { Card, CreateCardDto, UpdateCardDto, Rarity } from '../api/types'
 import { tokensApi } from '../api/tokensApi'
+import { raritiesApi } from '../api/raritiesApi'
 import { Token } from '../api/types'
 import './CardForm.css'
 
@@ -12,10 +13,12 @@ interface CardFormProps {
 
 export const CardForm = ({ card, onSubmit, onCancel }: CardFormProps) => {
   const [tokens, setTokens] = useState<Token[]>([])
+  const [rarities, setRarities] = useState<Rarity[]>([])
   const [loadingTokens, setLoadingTokens] = useState(true)
+  const [loadingRarities, setLoadingRarities] = useState(true)
   const [formData, setFormData] = useState<CreateCardDto>({
     token_id: 0,
-    rarity: '',
+    rarity_id: 0,
     design_type: '',
     background_image_url: '',
     is_active: true,
@@ -26,13 +29,14 @@ export const CardForm = ({ card, onSubmit, onCancel }: CardFormProps) => {
 
   useEffect(() => {
     loadTokens()
+    loadRarities()
   }, [])
 
   useEffect(() => {
     if (card) {
       setFormData({
         token_id: card.token_id,
-        rarity: card.rarity,
+        rarity_id: card.rarity_id,
         design_type: card.design_type,
         background_image_url: card.background_image_url,
         is_active: card.is_active,
@@ -40,7 +44,7 @@ export const CardForm = ({ card, onSubmit, onCancel }: CardFormProps) => {
     } else {
       setFormData({
         token_id: 0,
-        rarity: '',
+        rarity_id: 0,
         design_type: '',
         background_image_url: '',
         is_active: true,
@@ -52,11 +56,23 @@ export const CardForm = ({ card, onSubmit, onCancel }: CardFormProps) => {
     try {
       setLoadingTokens(true)
       const data = await tokensApi.getAll()
-      setTokens(data)
+      setTokens(data.items)
     } catch (err) {
       console.error('Ошибка при загрузке токенов:', err)
     } finally {
       setLoadingTokens(false)
+    }
+  }
+
+  const loadRarities = async () => {
+    try {
+      setLoadingRarities(true)
+      const data = await raritiesApi.getAll()
+      setRarities(data.items)
+    } catch (err) {
+      console.error('Ошибка при загрузке рарностей:', err)
+    } finally {
+      setLoadingRarities(false)
     }
   }
 
@@ -66,6 +82,11 @@ export const CardForm = ({ card, onSubmit, onCancel }: CardFormProps) => {
 
     if (!formData.token_id) {
       setError('Выберите токен')
+      return
+    }
+
+    if (!formData.rarity_id) {
+      setError('Выберите редкость')
       return
     }
 
@@ -89,7 +110,7 @@ export const CardForm = ({ card, onSubmit, onCancel }: CardFormProps) => {
       [name]:
         type === 'checkbox'
           ? checked
-          : name === 'token_id'
+          : name === 'token_id' || name === 'rarity_id'
             ? Number(value)
             : value,
     }))
@@ -122,20 +143,23 @@ export const CardForm = ({ card, onSubmit, onCancel }: CardFormProps) => {
       </div>
 
       <div className="card-form__field">
-        <label htmlFor="rarity">Редкость *</label>
+        <label htmlFor="rarity_id">Редкость *</label>
         <select
-          id="rarity"
-          name="rarity"
-          value={formData.rarity}
+          id="rarity_id"
+          name="rarity_id"
+          value={formData.rarity_id}
           onChange={handleChange}
           required
+          disabled={loadingRarities}
         >
-          <option value="">Выберите редкость</option>
-          <option value="common">Common</option>
-          <option value="rare">Rare</option>
-          <option value="epic">Epic</option>
-          <option value="legendary">Legendary</option>
+          <option value={0}>Выберите редкость</option>
+          {rarities.map((rarity) => (
+            <option key={rarity.id} value={rarity.id}>
+              {rarity.name}
+            </option>
+          ))}
         </select>
+        {loadingRarities && <span className="card-form__loading">Загрузка рарностей...</span>}
       </div>
 
       <div className="card-form__field">

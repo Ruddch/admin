@@ -1,4 +1,4 @@
-.tournament-form {
+.pack-type-form {
   background-color: #fff;
   padding: 24px;
   border-radius: 8px;
@@ -10,14 +10,14 @@
   flex: 1;
 }
 
-.tournament-form__title {
+.pack-type-form__title {
   margin-bottom: 24px;
   font-size: 24px;
   font-weight: 600;
   color: #333;
 }
 
-.tournament-form__error {
+.pack-type-form__error {
   padding: 12px;
   background-color: #f8d7da;
   color: #721c24;
@@ -25,21 +25,23 @@
   margin-bottom: 20px;
 }
 
-.tournament-form__field {
+.pack-type-form__field {
   margin-bottom: 24px;
   flex-shrink: 0;
 }
 
-.tournament-form__field label {
+.pack-type-form__field label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
   color: #333;
 }
 
-.tournament-form__field input[type='number'],
-.tournament-form__field input[type='datetime-local'],
-.tournament-form__field select {
+.pack-type-form__field input[type='text'],
+.pack-type-form__field input[type='url'],
+.pack-type-form__field input[type='number'],
+.pack-type-form__field input[type='datetime-local'],
+.pack-type-form__field textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ddd;
@@ -47,15 +49,38 @@
   font-size: 16px;
   transition: border-color 0.3s ease;
   box-sizing: border-box;
+  font-family: inherit;
 }
 
-.tournament-form__field input:focus,
-.tournament-form__field select:focus {
+.pack-type-form__field textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.pack-type-form__field input:focus,
+.pack-type-form__field textarea:focus {
   outline: none;
   border-color: #3498db;
 }
 
-.tournament-form__actions {
+.pack-type-form__field--checkbox label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.pack-type-form__field--checkbox input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.pack-type-form__field--checkbox span {
+  user-select: none;
+}
+
+.pack-type-form__actions {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
@@ -63,7 +88,7 @@
   padding-top: 24px;
 }
 
-.tournament-form__button {
+.pack-type-form__button {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -73,26 +98,25 @@
   transition: all 0.3s ease;
 }
 
-.tournament-form__button:disabled {
+.pack-type-form__button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.tournament-form__button--cancel {
+.pack-type-form__button--cancel {
   background-color: #95a5a6;
   color: #fff;
 }
 
-.tournament-form__button--cancel:hover:not(:disabled) {
+.pack-type-form__button--cancel:hover:not(:disabled) {
   background-color: #7f8c8d;
 }
 
-.tournament-form__button--submit {
+.pack-type-form__button--submit {
   background-color: #27ae60;
   color: #fff;
 }
 
-.tournament-form__button--submit:hover:not(:disabled) {
+.pack-type-form__button--submit:hover:not(:disabled) {
   background-color: #229954;
 }
-

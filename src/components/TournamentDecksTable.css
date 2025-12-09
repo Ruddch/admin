@@ -1,0 +1,92 @@
+.tournament-decks-table {
+  width: 100%;
+}
+
+.tournament-decks-table__loading,
+.tournament-decks-table__empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.tournament-decks-table__container {
+  overflow-x: auto;
+}
+
+.tournament-decks-table__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tournament-decks-table__table thead {
+  background-color: #f8f9fa;
+}
+
+.tournament-decks-table__table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+  font-size: 14px;
+}
+
+.tournament-decks-table__table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  color: #666;
+}
+
+.tournament-decks-table__table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.tournament-decks-table__composition {
+  max-width: 200px;
+  word-break: break-word;
+}
+
+.tournament-decks-table__hash {
+  max-width: 150px;
+  word-break: break-all;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+}
+
+.tournament-decks-table__errors {
+  max-width: 200px;
+  word-break: break-word;
+  color: #e74c3c;
+}
+
+.tournament-decks-table__status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tournament-decks-table__status--valid {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.tournament-decks-table__status--invalid {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.tournament-decks-table__status--active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.tournament-decks-table__status--inactive {
+  background-color: #f8d7da;
+  color: #721c24;
+}

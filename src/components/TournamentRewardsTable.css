@@ -1,0 +1,54 @@
+.tournament-rewards-table {
+  width: 100%;
+}
+
+.tournament-rewards-table__loading,
+.tournament-rewards-table__empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.tournament-rewards-table__container {
+  overflow-x: auto;
+}
+
+.tournament-rewards-table__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tournament-rewards-table__table thead {
+  background-color: #f8f9fa;
+}
+
+.tournament-rewards-table__table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+  font-size: 14px;
+}
+
+.tournament-rewards-table__table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  color: #666;
+}
+
+.tournament-rewards-table__table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.tournament-rewards-table__amount {
+  max-width: 200px;
+  word-break: break-all;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  cursor: help;
+}

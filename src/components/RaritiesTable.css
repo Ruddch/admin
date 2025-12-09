@@ -1,8 +1,8 @@
-.tokens-table {
+.rarities-table {
   overflow-x: auto;
 }
 
-.tokens-table__table {
+.rarities-table__table {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
@@ -10,11 +10,11 @@
   overflow: hidden;
 }
 
-.tokens-table__table thead {
+.rarities-table__table thead {
   background-color: #f8f9fa;
 }
 
-.tokens-table__table th {
+.rarities-table__table th {
   padding: 12px;
   text-align: left;
   font-weight: 600;
@@ -22,34 +22,36 @@
   border-bottom: 2px solid #e0e0e0;
 }
 
-.tokens-table__table td {
+.rarities-table__table td {
   padding: 12px;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.tokens-table__table tbody tr:hover {
+.rarities-table__table tbody tr:hover {
   background-color: #f8f9fa;
 }
 
-.tokens-table__empty {
+.rarities-table__empty {
   text-align: center;
   padding: 40px;
   color: #999;
 }
 
-.tokens-table__image {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
+.rarities-table__color {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rarities-table__color-swatch {
+  width: 24px;
+  height: 24px;
   border-radius: 4px;
+  border: 1px solid #ddd;
+  display: inline-block;
 }
 
-.tokens-table__no-image {
-  color: #999;
-  font-style: italic;
-}
-
-.tokens-table__status {
+.rarities-table__status {
   display: inline-block;
   padding: 4px 8px;
   border-radius: 4px;
@@ -57,22 +59,22 @@
   font-weight: 500;
 }
 
-.tokens-table__status--active {
+.rarities-table__status--active {
   background-color: #d4edda;
   color: #155724;
 }
 
-.tokens-table__status--inactive {
+.rarities-table__status--inactive {
   background-color: #f8d7da;
   color: #721c24;
 }
 
-.tokens-table__actions {
+.rarities-table__actions {
   display: flex;
   gap: 8px;
 }
 
-.tokens-table__button {
+.rarities-table__button {
   padding: 6px 12px;
   border: none;
   border-radius: 4px;
@@ -81,30 +83,20 @@
   transition: all 0.3s ease;
 }
 
-.tokens-table__button--edit {
+.rarities-table__button--edit {
   background-color: #3498db;
   color: #fff;
 }
 
-.tokens-table__button--edit:hover {
+.rarities-table__button--edit:hover {
   background-color: #2980b9;
 }
 
-.tokens-table__button--prices {
-  background-color: #9b59b6;
-  color: #fff;
-}
-
-.tokens-table__button--prices:hover {
-  background-color: #8e44ad;
-}
-
-.tokens-table__button--delete {
+.rarities-table__button--delete {
   background-color: #e74c3c;
   color: #fff;
 }
 
-.tokens-table__button--delete:hover {
+.rarities-table__button--delete:hover {
   background-color: #c0392b;
 }
-

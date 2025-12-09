@@ -74,6 +74,20 @@
   transition: all 0.3s ease;
 }
 
+.tournaments-table__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tournaments-table__button--details {
+  background-color: #9b59b6;
+  color: #fff;
+}
+
+.tournaments-table__button--details:hover {
+  background-color: #8e44ad;
+}
+
 .tournaments-table__button--edit {
   background-color: #3498db;
   color: #fff;

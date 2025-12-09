@@ -1,38 +1,63 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { tournamentsApi, TournamentsFilters } from '../api/tournamentsApi'
-import { Tournament, CreateTournamentDto, UpdateTournamentDto } from '../api/types'
+import { Tournament } from '../api/types'
 import { TournamentsTable } from '../components/TournamentsTable'
-import { TournamentForm } from '../components/TournamentForm'
 import './Page.css'
 import './TournamentsPage.css'
 
+const DEFAULT_LIMIT = 20
+
 export const TournamentsPage = () => {
+  const navigate = useNavigate()
   const [tournaments, setTournaments] = useState<Tournament[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [editingTournament, setEditingTournament] = useState<Tournament | null>(null)
-  const [showForm, setShowForm] = useState(false)
   const [statsSummary, setStatsSummary] = useState<string>('')
   const [filters, setFilters] = useState<TournamentsFilters>({
     status_filter: null,
     active_only: false,
   })
+  const [skip, setSkip] = useState<number>(0)
+  const [limit] = useState<number>(DEFAULT_LIMIT)
+  const [total, setTotal] = useState<number>(0)
+  const [hasNext, setHasNext] = useState<boolean>(false)
+  const [hasPrev, setHasPrev] = useState<boolean>(false)
+
+  useEffect(() => {
+    setSkip(0) // Сбрасываем на первую страницу при изменении фильтра
+  }, [filters])
 
   useEffect(() => {
     loadTournaments()
     loadStatsSummary()
-  }, [filters])
+  }, [filters, skip])
 
   const loadTournaments = async () => {
     try {
       setLoading(true)
       setError('')
-      const data = await tournamentsApi.getAll(filters)
-      setTournaments(data)
+      const data = await tournamentsApi.getAll(filters, skip, limit)
+      setTournaments(data.items)
+      setTotal(data.total)
+      setHasNext(data.has_next)
+      setHasPrev(data.has_prev)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Ошибка при загрузке турниров')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleNextPage = () => {
+    if (hasNext) {
+      setSkip((prev) => prev + limit)
+    }
+  }
+
+  const handlePrevPage = () => {
+    if (hasPrev) {
+      setSkip((prev) => Math.max(0, prev - limit))
     }
   }
 
@@ -46,30 +71,16 @@ export const TournamentsPage = () => {
     }
   }
 
-  const handleCreate = async (data: CreateTournamentDto | UpdateTournamentDto) => {
-    await tournamentsApi.create(data as CreateTournamentDto)
-    await loadTournaments()
-    await loadStatsSummary()
-    setShowForm(false)
-  }
-
-  const handleUpdate = async (data: CreateTournamentDto | UpdateTournamentDto) => {
-    if (!editingTournament) return
-    await tournamentsApi.update(editingTournament.id, data as UpdateTournamentDto)
-    await loadTournaments()
-    await loadStatsSummary()
-    setEditingTournament(null)
-    setShowForm(false)
-  }
-
   const handleEdit = (tournament: Tournament) => {
-    setEditingTournament(tournament)
-    setShowForm(true)
+    navigate(`/tournaments/${tournament.id}`)
   }
 
-  const handleCancel = () => {
-    setShowForm(false)
-    setEditingTournament(null)
+  const handleViewDetails = (tournament: Tournament) => {
+    navigate(`/tournaments/${tournament.id}/details`)
+  }
+
+  const handleCreate = () => {
+    navigate('/tournaments/new')
   }
 
   const handleFilterChange = (key: keyof TournamentsFilters, value: string | boolean | null) => {
@@ -128,10 +139,7 @@ export const TournamentsPage = () => {
           )}
           <button
             className="page__button page__button--primary"
-            onClick={() => {
-              setEditingTournament(null)
-              setShowForm(true)
-            }}
+            onClick={handleCreate}
           >
             Создать турнир
           </button>
@@ -140,21 +148,36 @@ export const TournamentsPage = () => {
 
       {error && <div className="page__error">{error}</div>}
 
-      {showForm && (
-        <div className="tournaments-page__form-container">
-          <TournamentForm
-            tournament={editingTournament}
-            onSubmit={editingTournament ? handleUpdate : handleCreate}
-            onCancel={handleCancel}
-          />
-        </div>
-      )}
-
       <div className="page__content">
         {loading ? (
           <div className="page__loading">Загрузка...</div>
         ) : (
-          <TournamentsTable tournaments={tournaments} onEdit={handleEdit} />
+          <>
+            <TournamentsTable tournaments={tournaments} onEdit={handleEdit} onViewDetails={handleViewDetails} />
+            {total > 0 && (
+              <div className="tournaments-page__pagination">
+                <div className="tournaments-page__pagination-info">
+                  Показано {skip + 1}-{Math.min(skip + limit, total)} из {total}
+                </div>
+                <div className="tournaments-page__pagination-controls">
+                  <button
+                    className="page__button"
+                    onClick={handlePrevPage}
+                    disabled={!hasPrev || loading}
+                  >
+                    Предыдущая
+                  </button>
+                  <button
+                    className="page__button"
+                    onClick={handleNextPage}
+                    disabled={!hasNext || loading}
+                  >
+                    Следующая
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

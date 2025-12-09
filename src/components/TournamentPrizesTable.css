@@ -1,0 +1,86 @@
+.tournament-prizes-table {
+  width: 100%;
+}
+
+.tournament-prizes-table__loading,
+.tournament-prizes-table__empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.tournament-prizes-table__container {
+  overflow-x: auto;
+}
+
+.tournament-prizes-table__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tournament-prizes-table__table thead {
+  background-color: #f8f9fa;
+}
+
+.tournament-prizes-table__table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+  font-size: 14px;
+}
+
+.tournament-prizes-table__table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  color: #666;
+}
+
+.tournament-prizes-table__table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.tournament-prizes-table__amount {
+  max-width: 200px;
+  word-break: break-all;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  cursor: help;
+}
+
+.tournament-prizes-table__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tournament-prizes-table__button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.tournament-prizes-table__button--edit {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.tournament-prizes-table__button--edit:hover {
+  background-color: #2980b9;
+}
+
+.tournament-prizes-table__button--delete {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.tournament-prizes-table__button--delete:hover {
+  background-color: #c0392b;
+}

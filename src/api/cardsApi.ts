@@ -1,4 +1,4 @@
-import { Card, CreateCardDto, UpdateCardDto } from './types'
+import { Card, CreateCardDto, UpdateCardDto, PaginatedResponse } from './types'
 import { apiClient } from './apiClient'
 
 export interface CardsFilters {
@@ -8,7 +8,7 @@ export interface CardsFilters {
 }
 
 export const cardsApi = {
-  getAll: async (filters?: CardsFilters): Promise<Card[]> => {
+  getAll: async (filters?: CardsFilters, skip?: number, limit?: number): Promise<PaginatedResponse<Card>> => {
     const params = new URLSearchParams()
     
     if (filters?.active_only !== undefined) {
@@ -20,11 +20,17 @@ export const cardsApi = {
     if (filters?.rarity !== undefined && filters.rarity !== null && filters.rarity !== '') {
       params.append('rarity', filters.rarity)
     }
+    if (skip !== undefined) {
+      params.append('skip', String(skip))
+    }
+    if (limit !== undefined) {
+      params.append('limit', String(limit))
+    }
     
     const queryString = params.toString()
     const url = queryString ? `/management/cards/?${queryString}` : '/management/cards/'
     
-    return apiClient<Card[]>(url, {
+    return apiClient<PaginatedResponse<Card>>(url, {
       method: 'GET',
     })
   },

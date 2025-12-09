@@ -5,9 +5,10 @@ interface TokensTableProps {
   tokens: Token[]
   onEdit: (token: Token) => void
   onDelete: (id: number) => void
+  onViewPrices: (token: Token) => void
 }
 
-export const TokensTable = ({ tokens, onEdit, onDelete }: TokensTableProps) => {
+export const TokensTable = ({ tokens, onEdit, onDelete, onViewPrices }: TokensTableProps) => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString('ru-RU')
   }
@@ -71,6 +72,12 @@ export const TokensTable = ({ tokens, onEdit, onDelete }: TokensTableProps) => {
                       onClick={() => onEdit(token)}
                     >
                       Редактировать
+                    </button>
+                    <button
+                      className="tokens-table__button tokens-table__button--prices"
+                      onClick={() => onViewPrices(token)}
+                    >
+                      История цен
                     </button>
                     <button
                       className="tokens-table__button tokens-table__button--delete"

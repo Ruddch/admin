@@ -1,0 +1,84 @@
+.token-prices-table {
+  margin-top: 32px;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.token-prices-table__title {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.token-prices-table__loading,
+.token-prices-table__empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.token-prices-table__container {
+  overflow-x: auto;
+}
+
+.token-prices-table__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.token-prices-table__table thead {
+  background-color: #f8f9fa;
+}
+
+.token-prices-table__table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  font-size: 14px;
+}
+
+.token-prices-table__table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  color: #666;
+}
+
+.token-prices-table__table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.token-prices-table__price {
+  font-weight: 600;
+  color: #333;
+}
+
+.token-prices-table__market-cap {
+  color: #666;
+}
+
+.token-prices-table__change {
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.token-prices-table__change--positive {
+  color: #27ae60;
+  background-color: #d5f4e6;
+}
+
+.token-prices-table__change--negative {
+  color: #e74c3c;
+  background-color: #fadbd8;
+}
+
+.token-prices-table__timestamp {
+  color: #999;
+  font-size: 13px;
+}

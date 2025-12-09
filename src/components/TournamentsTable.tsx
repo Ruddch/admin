@@ -4,9 +4,10 @@ import './TournamentsTable.css'
 interface TournamentsTableProps {
   tournaments: Tournament[]
   onEdit: (tournament: Tournament) => void
+  onViewDetails: (tournament: Tournament) => void
 }
 
-export const TournamentsTable = ({ tournaments, onEdit }: TournamentsTableProps) => {
+export const TournamentsTable = ({ tournaments, onEdit, onViewDetails }: TournamentsTableProps) => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString('ru-RU')
   }
@@ -73,12 +74,20 @@ export const TournamentsTable = ({ tournaments, onEdit }: TournamentsTableProps)
                 <td>{formatDate(tournament.created_at)}</td>
                 <td>{formatDate(tournament.updated_at)}</td>
                 <td>
-                  <button
-                    className="tournaments-table__button tournaments-table__button--edit"
-                    onClick={() => onEdit(tournament)}
-                  >
-                    Редактировать
-                  </button>
+                  <div className="tournaments-table__actions">
+                    <button
+                      className="tournaments-table__button tournaments-table__button--details"
+                      onClick={() => onViewDetails(tournament)}
+                    >
+                      Детали
+                    </button>
+                    <button
+                      className="tournaments-table__button tournaments-table__button--edit"
+                      onClick={() => onEdit(tournament)}
+                    >
+                      Редактировать
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))
