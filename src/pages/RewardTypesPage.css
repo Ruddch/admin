@@ -1,4 +1,4 @@
-.pack-types-page__pagination {
+.reward-types-page__pagination {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,28 +8,27 @@
   border-radius: 4px;
 }
 
-.pack-types-page__pagination-info {
+.reward-types-page__pagination-info {
   font-size: 14px;
   color: #666;
 }
 
-.pack-types-page__pagination-controls {
+.reward-types-page__pagination-controls {
   display: flex;
   gap: 12px;
 }
 
-.pack-types-page__pagination-controls .page__button {
+.reward-types-page__pagination-controls .page__button {
   background-color: #fff;
   color: #333;
   border: 1px solid #ddd;
 }
 
-.pack-types-page__pagination-controls .page__button:hover:not(:disabled) {
+.reward-types-page__pagination-controls .page__button:hover:not(:disabled) {
   background-color: #f0f0f0;
 }
 
-.pack-types-page__pagination-controls .page__button:disabled {
+.reward-types-page__pagination-controls .page__button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-

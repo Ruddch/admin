@@ -1,11 +1,36 @@
-import { User, UpdateUserDto } from './types'
+import { User, UpdateUserDto, PaginatedResponse } from './types'
 import { apiClient } from './apiClient'
 
 export const usersApi = {
-  getAll: async (): Promise<User[]> => {
-    return apiClient<User[]>('/panel/users/', {
+  getAll: async (skip?: number, limit?: number): Promise<PaginatedResponse<User>> => {
+    const params = new URLSearchParams()
+    if (skip !== undefined) {
+      params.append('skip', String(skip))
+    }
+    if (limit !== undefined) {
+      params.append('limit', String(limit))
+    }
+    const queryString = params.toString()
+    const url = queryString ? `/panel/users/?${queryString}` : '/panel/users/'
+    
+    const response = await apiClient<PaginatedResponse<User> | User[]>(url, {
       method: 'GET',
     })
+
+    // Обработка случая, когда API возвращает старый формат (массив)
+    if (Array.isArray(response)) {
+      return {
+        items: response,
+        total: response.length,
+        skip: skip || 0,
+        limit: limit || response.length,
+        has_next: false,
+        has_prev: false,
+      }
+    }
+
+    // Новый формат с пагинацией
+    return response
   },
 
   getById: async (id: number): Promise<User> => {

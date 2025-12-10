@@ -295,3 +295,4 @@ export const PackTypeForm = ({ packType, onSubmit, onCancel }: PackTypeFormProps
     </form>
   )
 }
+

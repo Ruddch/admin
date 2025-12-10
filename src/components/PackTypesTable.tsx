@@ -98,3 +98,4 @@ export const PackTypesTable = ({ packTypes, onEdit, onDelete }: PackTypesTablePr
     </div>
   )
 }
+

@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { packTypesApi } from '../api/packTypesApi'
-import { PackType, CreatePackTypeDto, UpdatePackTypeDto } from '../api/types'
-import { PackTypeForm } from '../components/PackTypeForm'
+import { usersApi } from '../api/usersApi'
+import { User, UpdateUserDto } from '../api/types'
+import { UserForm } from '../components/UserForm'
 import './Page.css'
-import './PackTypeEditPage.css'
+import './UserEditPage.css'
 
-export const PackTypeEditPage = () => {
+export const UserEditPage = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const [packType, setPackType] = useState<PackType | null>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -17,43 +17,41 @@ export const PackTypeEditPage = () => {
 
   useEffect(() => {
     if (isEditMode && id) {
-      loadPackType()
+      loadUser()
     } else {
       setLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
-  const loadPackType = async () => {
+  const loadUser = async () => {
     if (!id || id === 'new') return
 
     try {
       setLoading(true)
       setError('')
-      const data = await packTypesApi.getById(Number(id))
-      setPackType(data)
+      const data = await usersApi.getById(Number(id))
+      setUser(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ошибка при загрузке типа пака')
+      setError(err instanceof Error ? err.message : 'Ошибка при загрузке пользователя')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleSubmit = async (data: CreatePackTypeDto | UpdatePackTypeDto) => {
+  const handleSubmit = async (data: UpdateUserDto) => {
+    if (!user) return
+
     try {
-      if (isEditMode && packType) {
-        await packTypesApi.update(packType.id, data as UpdatePackTypeDto)
-      } else {
-        await packTypesApi.create(data as CreatePackTypeDto)
-      }
-      navigate('/pack-types')
+      await usersApi.update(user.id, data)
+      navigate('/users')
     } catch (err) {
-      throw err // Пробрасываем ошибку в PackTypeForm
+      throw err // Пробрасываем ошибку в UserForm
     }
   }
 
   const handleCancel = () => {
-    navigate('/pack-types')
+    navigate('/users')
   }
 
   if (loading) {
@@ -75,12 +73,22 @@ export const PackTypeEditPage = () => {
     )
   }
 
+  if (!user) {
+    return (
+      <div className="page">
+        <div className="page__error">Пользователь не найден</div>
+        <button className="page__button" onClick={handleCancel}>
+          Вернуться к списку
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div className="page page--full-height">
-      <div className="pack-type-edit-page__form-container">
-        <PackTypeForm packType={packType} onSubmit={handleSubmit} onCancel={handleCancel} />
+      <div className="user-edit-page__form-container">
+        <UserForm user={user} onSubmit={handleSubmit} onCancel={handleCancel} />
       </div>
     </div>
   )
 }
-

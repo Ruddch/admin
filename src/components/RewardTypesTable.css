@@ -1,8 +1,8 @@
-.pack-types-table {
+.reward-types-table {
   overflow-x: auto;
 }
 
-.pack-types-table__table {
+.reward-types-table__table {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
@@ -10,11 +10,11 @@
   overflow: hidden;
 }
 
-.pack-types-table__table thead {
+.reward-types-table__table thead {
   background-color: #f8f9fa;
 }
 
-.pack-types-table__table th {
+.reward-types-table__table th {
   padding: 12px;
   text-align: left;
   font-weight: 600;
@@ -22,27 +22,27 @@
   border-bottom: 2px solid #e0e0e0;
 }
 
-.pack-types-table__table td {
+.reward-types-table__table td {
   padding: 12px;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.pack-types-table__table tbody tr:hover {
+.reward-types-table__table tbody tr:hover {
   background-color: #f8f9fa;
 }
 
-.pack-types-table__empty {
+.reward-types-table__empty {
   text-align: center;
   padding: 40px;
   color: #999;
 }
 
-.pack-types-table__description {
+.reward-types-table__description {
   max-width: 200px;
   word-break: break-word;
 }
 
-.pack-types-table__price {
+.reward-types-table__amount {
   max-width: 150px;
   word-break: break-all;
   font-family: 'Courier New', monospace;
@@ -50,7 +50,7 @@
   cursor: help;
 }
 
-.pack-types-table__status {
+.reward-types-table__status {
   display: inline-block;
   padding: 4px 8px;
   border-radius: 4px;
@@ -58,22 +58,32 @@
   font-weight: 500;
 }
 
-.pack-types-table__status--active {
+.reward-types-table__status--active {
   background-color: #d4edda;
   color: #155724;
 }
 
-.pack-types-table__status--inactive {
+.reward-types-table__status--inactive {
   background-color: #f8d7da;
   color: #721c24;
 }
 
-.pack-types-table__actions {
+.reward-types-table__status--claimable {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.reward-types-table__status--not-claimable {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.reward-types-table__actions {
   display: flex;
   gap: 8px;
 }
 
-.pack-types-table__button {
+.reward-types-table__button {
   padding: 6px 12px;
   border: none;
   border-radius: 4px;
@@ -82,21 +92,20 @@
   transition: all 0.3s ease;
 }
 
-.pack-types-table__button--edit {
+.reward-types-table__button--edit {
   background-color: #3498db;
   color: #fff;
 }
 
-.pack-types-table__button--edit:hover {
+.reward-types-table__button--edit:hover {
   background-color: #2980b9;
 }
 
-.pack-types-table__button--delete {
+.reward-types-table__button--delete {
   background-color: #e74c3c;
   color: #fff;
 }
 
-.pack-types-table__button--delete:hover {
+.reward-types-table__button--delete:hover {
   background-color: #c0392b;
 }
-

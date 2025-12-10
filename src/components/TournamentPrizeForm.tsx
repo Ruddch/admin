@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { TournamentPrize, CreateTournamentPrizeDto, UpdateTournamentPrizeDto, Tournament } from '../api/types'
+import { TournamentPrize, CreateTournamentPrizeDto, UpdateTournamentPrizeDto, Tournament, RewardType } from '../api/types'
 import { tournamentsApi } from '../api/tournamentsApi'
+import { rewardTypesApi } from '../api/rewardTypesApi'
 import './TournamentPrizeForm.css'
 
 interface TournamentPrizeFormProps {
@@ -13,6 +14,8 @@ interface TournamentPrizeFormProps {
 export const TournamentPrizeForm = ({ prize, tournamentId, onSubmit, onCancel }: TournamentPrizeFormProps) => {
   const [tournaments, setTournaments] = useState<Tournament[]>([])
   const [loadingTournaments, setLoadingTournaments] = useState(true)
+  const [rewardTypes, setRewardTypes] = useState<RewardType[]>([])
+  const [loadingRewardTypes, setLoadingRewardTypes] = useState(true)
   const [formData, setFormData] = useState<CreateTournamentPrizeDto>({
     tournament_id: tournamentId || 0,
     position_from: 0,
@@ -28,6 +31,7 @@ export const TournamentPrizeForm = ({ prize, tournamentId, onSubmit, onCancel }:
     if (!tournamentId) {
       loadTournaments()
     }
+    loadRewardTypes()
   }, [tournamentId])
 
   useEffect(() => {
@@ -62,12 +66,29 @@ export const TournamentPrizeForm = ({ prize, tournamentId, onSubmit, onCancel }:
     }
   }
 
+  const loadRewardTypes = async () => {
+    try {
+      setLoadingRewardTypes(true)
+      const data = await rewardTypesApi.getAll(0, 1000) // Загружаем много типов наград для выбора
+      setRewardTypes(data.items)
+    } catch (err) {
+      console.error('Ошибка при загрузке типов наград:', err)
+    } finally {
+      setLoadingRewardTypes(false)
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
 
     if (!formData.tournament_id || formData.tournament_id <= 0) {
       setError('Укажите ID турнира')
+      return
+    }
+
+    if (!formData.reward_type_id || formData.reward_type_id <= 0) {
+      setError('Выберите тип награды')
       return
     }
 
@@ -151,17 +172,22 @@ export const TournamentPrizeForm = ({ prize, tournamentId, onSubmit, onCancel }:
 
       <div className="tournament-prize-form__field">
         <label htmlFor="reward_type_id">ID типа награды *</label>
-        <input
+        <select
           id="reward_type_id"
           name="reward_type_id"
-          type="number"
           value={formData.reward_type_id}
           onChange={handleChange}
           required
-          min="0"
-          step="1"
-          placeholder="Введите ID типа награды"
-        />
+          disabled={loadingRewardTypes}
+        >
+          <option value={0}>Выберите тип награды</option>
+          {rewardTypes.map((rewardType) => (
+            <option key={rewardType.id} value={rewardType.id}>
+              {rewardType.name} ({rewardType.reward_category})
+            </option>
+          ))}
+        </select>
+        {loadingRewardTypes && <span className="tournament-prize-form__loading">Загрузка типов наград...</span>}
       </div>
 
       <div className="tournament-prize-form__field">

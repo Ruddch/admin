@@ -11,6 +11,15 @@ export const UsersTable = ({ users, onEdit }: UsersTableProps) => {
     return new Date(dateString).toLocaleString('ru-RU')
   }
 
+  // Защита от некорректных данных
+  if (!Array.isArray(users)) {
+    return (
+      <div className="users-table">
+        <div className="users-table__error">Ошибка: некорректный формат данных</div>
+      </div>
+    )
+  }
+
   return (
     <div className="users-table">
       <table className="users-table__table">

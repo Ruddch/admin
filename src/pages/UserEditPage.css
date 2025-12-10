@@ -5,10 +5,9 @@
   min-height: calc(100vh - 120px);
 }
 
-.pack-type-edit-page__form-container {
+.user-edit-page__form-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
 }
-

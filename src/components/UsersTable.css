@@ -37,6 +37,15 @@
   color: #999;
 }
 
+.users-table__error {
+  padding: 20px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border-radius: 4px;
+  text-align: center;
+  margin: 20px 0;
+}
+
 .users-table__wallet {
   display: flex;
   flex-direction: column;

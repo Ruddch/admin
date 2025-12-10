@@ -206,6 +206,43 @@ export interface UpdatePackTypeDto {
   is_active?: boolean
 }
 
+// Типы для типов наград
+export interface RewardType {
+  id: number
+  name: string
+  description: string
+  reward_category: string
+  default_amount: string
+  currency_type: string
+  is_claimable: boolean
+  expires_after_days: number
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface CreateRewardTypeDto {
+  name: string
+  description: string
+  reward_category: string
+  default_amount: number
+  currency_type: string
+  is_claimable: boolean
+  expires_after_days: number
+  is_active: boolean
+}
+
+export interface UpdateRewardTypeDto {
+  name?: string
+  description?: string
+  reward_category?: string
+  default_amount?: number
+  currency_type?: string
+  is_claimable?: boolean
+  expires_after_days?: number
+  is_active?: boolean
+}
+
 // Типы для колод турнира
 export interface TournamentDeck {
   id: number

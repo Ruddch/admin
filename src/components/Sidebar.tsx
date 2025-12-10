@@ -57,6 +57,14 @@ export const Sidebar = () => {
           Pack Types
         </NavLink>
         <NavLink
+          to="/reward-types"
+          className={({ isActive }) =>
+            `sidebar__link ${isActive ? 'sidebar__link--active' : ''}`
+          }
+        >
+          Reward Types
+        </NavLink>
+        <NavLink
           to="/users"
           className={({ isActive }) =>
             `sidebar__link ${isActive ? 'sidebar__link--active' : ''}`

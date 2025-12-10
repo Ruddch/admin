@@ -1,7 +1,3 @@
-.users-page__form-container {
-  margin-bottom: 24px;
-}
-
 .users-page__stats {
   padding: 8px 16px;
   background-color: #f8f9fa;
@@ -20,5 +16,40 @@
 
 .page__button--secondary:hover {
   background-color: #2980b9;
+}
+
+.users-page__pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.users-page__pagination-info {
+  font-size: 14px;
+  color: #666;
+}
+
+.users-page__pagination-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.users-page__pagination-controls .page__button {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.users-page__pagination-controls .page__button:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.users-page__pagination-controls .page__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 

@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { usersApi } from '../api/usersApi'
-import { User } from '../api/types'
-import { UsersTable } from '../components/UsersTable'
+import { rewardTypesApi } from '../api/rewardTypesApi'
+import { RewardType } from '../api/types'
+import { RewardTypesTable } from '../components/RewardTypesTable'
 import './Page.css'
-import './UsersPage.css'
+import './RewardTypesPage.css'
 
 const DEFAULT_LIMIT = 20
 
-export const UsersPage = () => {
+export const RewardTypesPage = () => {
   const navigate = useNavigate()
-  const [users, setUsers] = useState<User[]>([])
+  const [rewardTypes, setRewardTypes] = useState<RewardType[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [statsSummary, setStatsSummary] = useState<string>('')
   const [skip, setSkip] = useState<number>(0)
   const [limit] = useState<number>(DEFAULT_LIMIT)
   const [total, setTotal] = useState<number>(0)
@@ -21,31 +20,27 @@ export const UsersPage = () => {
   const [hasPrev, setHasPrev] = useState<boolean>(false)
 
   useEffect(() => {
-    loadStatsSummary()
-  }, [])
-
-  useEffect(() => {
-    loadUsers()
+    loadRewardTypes()
   }, [skip])
 
-  const loadUsers = async () => {
+  const loadRewardTypes = async () => {
     try {
       setLoading(true)
       setError('')
-      const data = await usersApi.getAll(skip, limit)
+      const data = await rewardTypesApi.getAll(skip, limit)
       
       // Проверяем, что данные в правильном формате
       if (!data || !Array.isArray(data.items)) {
         throw new Error('Неверный формат данных от сервера')
       }
       
-      setUsers(data.items || [])
+      setRewardTypes(data.items || [])
       setTotal(data.total || 0)
       setHasNext(data.has_next || false)
       setHasPrev(data.has_prev || false)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ошибка при загрузке пользователей')
-      setUsers([])
+      setError(err instanceof Error ? err.message : 'Ошибка при загрузке типов наград')
+      setRewardTypes([])
       setTotal(0)
       setHasNext(false)
       setHasPrev(false)
@@ -66,47 +61,37 @@ export const UsersPage = () => {
     }
   }
 
-  const loadStatsSummary = async () => {
+  const handleDelete = async (id: number) => {
+    if (!confirm('Вы уверены, что хотите удалить этот тип награды?')) {
+      return
+    }
+
     try {
-      const summary = await usersApi.getStatsSummary()
-      // Преобразуем объект в строку, если это объект
-      setStatsSummary(typeof summary === 'string' ? summary : JSON.stringify(summary))
+      await rewardTypesApi.delete(id)
+      await loadRewardTypes()
     } catch (err) {
-      // Тихая ошибка - статистика не критична для работы страницы
-      console.error('Ошибка при загрузке статистики:', err)
-      setStatsSummary('')
+      setError(err instanceof Error ? err.message : 'Ошибка при удалении типа награды')
     }
   }
 
-  const handleSearchDuplicates = async () => {
-    try {
-      const result = await usersApi.searchDuplicates()
-      const message = typeof result === 'string' ? result : JSON.stringify(result)
-      alert(message)
-    } catch (err) {
-      alert(err instanceof Error ? err.message : 'Ошибка при поиске дубликатов')
-    }
+  const handleEdit = (rewardType: RewardType) => {
+    navigate(`/reward-types/${rewardType.id}`)
   }
 
-  const handleEdit = (user: User) => {
-    navigate(`/users/${user.id}`)
+  const handleCreate = () => {
+    navigate('/reward-types/new')
   }
 
   return (
     <div className="page">
       <div className="page__header">
-        <h1 className="page__title">Users Settings</h1>
+        <h1 className="page__title">Reward Types Settings</h1>
         <div className="page__actions">
-          {statsSummary && (
-            <div className="users-page__stats">
-              <span className="users-page__stats-text">{statsSummary}</span>
-            </div>
-          )}
           <button
-            className="page__button page__button--secondary"
-            onClick={handleSearchDuplicates}
+            className="page__button page__button--primary"
+            onClick={handleCreate}
           >
-            Найти дубликаты
+            Создать тип награды
           </button>
         </div>
       </div>
@@ -118,13 +103,13 @@ export const UsersPage = () => {
           <div className="page__loading">Загрузка...</div>
         ) : (
           <>
-            <UsersTable users={users} onEdit={handleEdit} />
+            <RewardTypesTable rewardTypes={rewardTypes} onEdit={handleEdit} onDelete={handleDelete} />
             {total > 0 && (
-              <div className="users-page__pagination">
-                <div className="users-page__pagination-info">
+              <div className="reward-types-page__pagination">
+                <div className="reward-types-page__pagination-info">
                   Показано {skip + 1}-{Math.min(skip + limit, total)} из {total}
                 </div>
-                <div className="users-page__pagination-controls">
+                <div className="reward-types-page__pagination-controls">
                   <button
                     className="page__button"
                     onClick={handlePrevPage}

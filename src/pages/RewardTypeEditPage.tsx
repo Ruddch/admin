@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { packTypesApi } from '../api/packTypesApi'
-import { PackType, CreatePackTypeDto, UpdatePackTypeDto } from '../api/types'
-import { PackTypeForm } from '../components/PackTypeForm'
+import { rewardTypesApi } from '../api/rewardTypesApi'
+import { RewardType, CreateRewardTypeDto, UpdateRewardTypeDto } from '../api/types'
+import { RewardTypeForm } from '../components/RewardTypeForm'
 import './Page.css'
-import './PackTypeEditPage.css'
+import './RewardTypeEditPage.css'
 
-export const PackTypeEditPage = () => {
+export const RewardTypeEditPage = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const [packType, setPackType] = useState<PackType | null>(null)
+  const [rewardType, setRewardType] = useState<RewardType | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -17,43 +17,43 @@ export const PackTypeEditPage = () => {
 
   useEffect(() => {
     if (isEditMode && id) {
-      loadPackType()
+      loadRewardType()
     } else {
       setLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
-  const loadPackType = async () => {
+  const loadRewardType = async () => {
     if (!id || id === 'new') return
 
     try {
       setLoading(true)
       setError('')
-      const data = await packTypesApi.getById(Number(id))
-      setPackType(data)
+      const data = await rewardTypesApi.getById(Number(id))
+      setRewardType(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ошибка при загрузке типа пака')
+      setError(err instanceof Error ? err.message : 'Ошибка при загрузке типа награды')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleSubmit = async (data: CreatePackTypeDto | UpdatePackTypeDto) => {
+  const handleSubmit = async (data: CreateRewardTypeDto | UpdateRewardTypeDto) => {
     try {
-      if (isEditMode && packType) {
-        await packTypesApi.update(packType.id, data as UpdatePackTypeDto)
+      if (isEditMode && rewardType) {
+        await rewardTypesApi.update(rewardType.id, data as UpdateRewardTypeDto)
       } else {
-        await packTypesApi.create(data as CreatePackTypeDto)
+        await rewardTypesApi.create(data as CreateRewardTypeDto)
       }
-      navigate('/pack-types')
+      navigate('/reward-types')
     } catch (err) {
-      throw err // Пробрасываем ошибку в PackTypeForm
+      throw err // Пробрасываем ошибку в RewardTypeForm
     }
   }
 
   const handleCancel = () => {
-    navigate('/pack-types')
+    navigate('/reward-types')
   }
 
   if (loading) {
@@ -77,10 +77,9 @@ export const PackTypeEditPage = () => {
 
   return (
     <div className="page page--full-height">
-      <div className="pack-type-edit-page__form-container">
-        <PackTypeForm packType={packType} onSubmit={handleSubmit} onCancel={handleCancel} />
+      <div className="reward-type-edit-page__form-container">
+        <RewardTypeForm rewardType={rewardType} onSubmit={handleSubmit} onCancel={handleCancel} />
       </div>
     </div>
   )
 }
-

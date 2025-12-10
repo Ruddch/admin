@@ -15,7 +15,10 @@ import { PrizesPage } from '../pages/PrizesPage'
 import { PrizeEditPage } from '../pages/PrizeEditPage'
 import { PackTypesPage } from '../pages/PackTypesPage'
 import { PackTypeEditPage } from '../pages/PackTypeEditPage'
+import { RewardTypesPage } from '../pages/RewardTypesPage'
+import { RewardTypeEditPage } from '../pages/RewardTypeEditPage'
 import { UsersPage } from '../pages/UsersPage'
+import { UserEditPage } from '../pages/UserEditPage'
 import { AdminLayout } from '../layouts/AdminLayout'
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -60,7 +63,10 @@ export const AppRouter = () => {
         <Route path="prizes/:id" element={<PrizeEditPage />} />
         <Route path="pack-types" element={<PackTypesPage />} />
         <Route path="pack-types/:id" element={<PackTypeEditPage />} />
+        <Route path="reward-types" element={<RewardTypesPage />} />
+        <Route path="reward-types/:id" element={<RewardTypeEditPage />} />
         <Route path="users" element={<UsersPage />} />
+        <Route path="users/:id" element={<UserEditPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
